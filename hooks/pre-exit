@@ -24,6 +24,7 @@ TAGS=$(getTags)
 reportToDatadog "${METRIC_NAME}" "${METRIC_VALUE}" h "${TAGS}"
 echo "Step key: ${BUILDKITE_STEP_KEY}"
 STEP_OUTCOME=$(buildkite-agent step get "outcome" --step "${BUILDKITE_STEP_KEY}")
+STEP_OUTCOME=$(buildkite-agent step get "outcome" --step "brakeman")
 echo "Step outcome: ${STEP_OUTCOME}"
 STEP_SUCCEEDED=$([[ $STEP_OUTCOME == "passed" ]] && echo "true" || echo "false")
 reportToDatadog "custom.ads.test_step_result_aggregate" 1 d "${TAGS},success:${STEP_SUCCEEDED},build:${BUILDKITE_BUILD_URL}"
