@@ -1,4 +1,4 @@
-name: Datadog Stats
+name: Datadog Reporter
 description: Collects detailed stats on build times and outcomes and sends to datadog
 author: https://github.com/better
 requirements:
