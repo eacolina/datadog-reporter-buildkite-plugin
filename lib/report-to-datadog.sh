@@ -6,7 +6,7 @@ function reportToDatadog() {
   local metric_type=$3
   local tags=$4
 
-  DD_HOST=${BUILDKITE_PLUGIN_DATADOG_STATS_DOGSTATSD_HOST:-localhost}
+  DD_HOST=${BUILDKITE_PLUGIN_DATADOG_STATS_DOGSTATSD_HOST:-"172.17.0.1"}
   DD_PORT=${BUILDKITE_PLUGIN_DATADOG_STATS_DOGSTATSD_PORT:-8125}
 
   echo "Reporting ${metric_name} with value=${metric_value}, type=${metric_type}, tags=${tags}"
