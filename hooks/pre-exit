@@ -24,3 +24,12 @@ TAGS=$(getTags)
 reportToDatadog "${METRIC_NAME}" "${METRIC_VALUE}" h "${TAGS}"
 STEP_SUCCEEDED=$([[ $BUILDKITE_COMMAND_EXIT_STATUS == 0 ]] && echo "true" || echo "false")
 reportToDatadog "custom.ads.buildkite.step" "1" d "${TAGS},success:${STEP_SUCCEEDED},build:${BUILDKITE_BUILD_URL}"
+
+#metdata stuff
+key=$BUILDKITE_STEP_KEY
+if [[ $(buildkite-agent meta-data exists "step.${key}") == 0 ]]; then
+  curr=[[ $(buildkite-agent meta-data get "step.${key}") == 'true']] && echo "true" || echo "false"
+  STEP_SUCCEEDED=$([[ $BUILDKITE_COMMAND_EXIT_STATUS == 0 ]] && echo "true" || echo "false")
+  STEP_SUCCEEDED=$([[ $curr == 'true' && $STEP_SUCCEEDED == 'true' ]] && echo "true" || echo "false")
+  buildkite-agent meta-data set "step.${key}" "${STEP_SUCCEEDED}"
+fi
